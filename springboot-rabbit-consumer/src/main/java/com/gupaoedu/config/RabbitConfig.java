@@ -52,7 +52,7 @@ public class RabbitConfig {
 
     @Bean
     public Binding bindSecond(@Qualifier("vipFirstQueue") Queue queue, @Qualifier("vipTopicExchange") TopicExchange exchange){
-        return BindingBuilder.bind(queue).to(exchange).with("topic.#");
+        return BindingBuilder.bind(queue).to(exchange).with("topic.*");
     }
 
 

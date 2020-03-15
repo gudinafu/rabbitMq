@@ -36,7 +36,7 @@ public class MerchantServiceImpl implements MerchantService {
     private MerchantMapper merchantMapper;
 
     @Autowired
-    AmqpTemplate gupaoTemplate;
+    AmqpTemplate rabbitTemplate;
 
 
     @Override
@@ -57,7 +57,7 @@ public class MerchantServiceImpl implements MerchantService {
         title.put("type","add");
         title.put("desc","增加商户");
         title.put("content",jsonBody);
-        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
+        rabbitTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
 
         return k;
     }
@@ -72,7 +72,7 @@ public class MerchantServiceImpl implements MerchantService {
         title.put("type","state");
         title.put("desc","更新商户状态");
         title.put("content",jsonBody);
-        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
+        rabbitTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
 
         return k;
     }
@@ -87,7 +87,7 @@ public class MerchantServiceImpl implements MerchantService {
         title.put("type","update");
         title.put("desc","修改商户信息");
         title.put("content",jsonBody);
-        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
+        rabbitTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
 
         return k;
     }
@@ -105,7 +105,7 @@ public class MerchantServiceImpl implements MerchantService {
         title.put("desc","删除商户");
         title.put("content",jsonBody);
 
-        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
+        rabbitTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
 
         return k;
     }
