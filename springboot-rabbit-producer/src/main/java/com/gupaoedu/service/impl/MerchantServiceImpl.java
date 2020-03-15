@@ -52,14 +52,12 @@ public class MerchantServiceImpl implements MerchantService {
     @Override
     public int add(Merchant merchant) {
         int k = merchantMapper.add(merchant);
-        ObjectMapper mapper = new ObjectMapper();
-        String json = "";
-        try {
-            json = mapper.writeValueAsString(merchant);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, json);
+        JSONObject title = new JSONObject();
+        String jsonBody = JSONObject.toJSONString(merchant);
+        title.put("type","add");
+        title.put("desc","增加商户");
+        title.put("content",jsonBody);
+        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
 
         return k;
     }
@@ -84,14 +82,12 @@ public class MerchantServiceImpl implements MerchantService {
 
         int k = merchantMapper.update(merchant);
 
-        ObjectMapper mapper = new ObjectMapper();
-        String json = "";
-        try {
-            json = mapper.writeValueAsString(merchant);
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
-        }
-        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, json);
+        JSONObject title = new JSONObject();
+        String jsonBody = JSONObject.toJSONString(merchant);
+        title.put("type","update");
+        title.put("desc","修改商户信息");
+        title.put("content",jsonBody);
+        gupaoTemplate.convertAndSend(topicExchange,topicRoutingKey, title.toJSONString());
 
         return k;
     }
