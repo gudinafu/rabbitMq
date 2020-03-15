@@ -12,6 +12,9 @@ import org.springframework.context.annotation.Configuration;
  * rabbitmq服务端确认消息的两种方式
  * 1.事务模式(不推荐)
  * 2.确认模式(推荐异步)
+ *
+ * channel是为了减少tcp连接资源的消耗
+ * vhost是为了资源隔离
  */
 @Configuration
 public class RabbitConfig {
