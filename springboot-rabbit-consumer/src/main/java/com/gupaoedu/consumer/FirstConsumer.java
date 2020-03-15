@@ -25,6 +25,7 @@ public class FirstConsumer {
     @RabbitListener(queues = "${com.gupaoedu.firstqueue}", containerFactory="rabbitListenerContainerFactory")
     public void process(String msgContent,Channel channel, Message message) throws IOException {
         System.out.println("First Queue received msg : " + msgContent );
+        //手动应答(参数1:唯一标识ID,参数2:是否重新入队)
         channel.basicAck(message.getMessageProperties().getDeliveryTag(), false);
     }
 }

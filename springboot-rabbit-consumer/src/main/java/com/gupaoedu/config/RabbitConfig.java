@@ -67,6 +67,14 @@ public class RabbitConfig {
         SimpleRabbitListenerContainerFactory factory = new SimpleRabbitListenerContainerFactory();
         factory.setConnectionFactory(connectionFactory);
         factory.setMessageConverter(new Jackson2JsonMessageConverter());
+        //NONE:自动ACK(消息被消费者接收立即ACK)
+        //MANUAL:手动ACK
+
+        //AUTO:根据情况ACK
+        //如果消息成功被消费（成功的意思是在消费的过程中没有抛出异常），则自动确认
+        //当抛出 AmqpRejectAndDontRequeueException 异常的时候，则消息会被拒绝，且 requeue = false（不重新入队列）
+        //当抛出 ImmediateAcknowledgeAmqpException 异常，则消费者会被确认
+        //其他的异常，则消息会被拒绝
         factory.setAcknowledgeMode(AcknowledgeMode.MANUAL);
         factory.setAutoStartup(true);
         return factory;
